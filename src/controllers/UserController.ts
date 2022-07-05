@@ -6,7 +6,7 @@ import { UserModel, IUser } from "../models/UserModel";
 const jwtSecret = process.env.JWT_SECRET || "asdasdasdasd";
 
 // Generate user token
-const generateToken = (id: number) => {
+const generateToken = (id: number): string => {
   return jwt.sign({ id }, jwtSecret, { expiresIn: "5d" });
 };
 
@@ -15,7 +15,10 @@ interface IRegisterRequest extends Request {
 }
 
 // Register user
-const register = async (req: IRegisterRequest, res: Response) => {
+const register = async (
+  req: IRegisterRequest,
+  res: Response
+): Promise<void> => {
   const { name, email, password } = req.body;
 
   // Check if user exists
