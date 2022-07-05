@@ -1,5 +1,9 @@
 import express, { Request, Response } from "express";
 import cors, { CorsOptions } from "cors";
+
+// routes
+import { router } from "./src/routes/Router";
+
 // database connection
 import "./src/config/db";
 
@@ -22,6 +26,8 @@ app.use(cors(corsOptions));
 app.get("/", (req: Request, res: Response) => {
   res.send("API is working!");
 });
+
+app.use(router);
 
 app.listen(port, () => {
   console.log("App is working!");
