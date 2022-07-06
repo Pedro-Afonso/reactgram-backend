@@ -26,9 +26,9 @@ router.post("/login", loginValidation(), validate, login);
 router.put(
   "/",
   authGuard,
+  imageUpload.single("profileImage"),
   userUpdateValidation(),
   validate,
-  imageUpload.single("profileImage"),
   update
 );
 
