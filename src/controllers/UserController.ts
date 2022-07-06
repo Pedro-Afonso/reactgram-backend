@@ -1,9 +1,11 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import "dotenv/config";
+
 import { UserModel, IUser } from "../models/UserModel";
 
-const jwtSecret = process.env.JWT_SECRET || "asdasdasdasd";
+const jwtSecret = process.env.JWT_SECRET;
 
 // Generate user token
 const generateToken = (id: number): string => {
@@ -57,4 +59,17 @@ const register = async (
   });
 };
 
-export { register };
+interface IGetCurrentUserRequest extends Request {
+  user: IUser;
+}
+// Get current user
+const getCurrentUser = async (
+  req: IGetCurrentUserRequest,
+  res: Response
+): Promise<void> => {
+  const user = await req.user;
+
+  res.status(200).json(user);
+};
+
+export { register, getCurrentUser };
