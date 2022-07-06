@@ -1,6 +1,6 @@
-import { body } from "express-validator";
+import { body, ValidationChain } from "express-validator";
 
-const userCreateValidation = () => {
+const userCreateValidation = (): ValidationChain[] => {
   return [
     body("name")
       .isString()
@@ -29,7 +29,7 @@ const userCreateValidation = () => {
   ];
 };
 
-const loginValidation = () => {
+const loginValidation = (): ValidationChain[] => {
   return [
     body("email")
       .isString()
