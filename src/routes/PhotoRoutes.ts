@@ -6,6 +6,7 @@ const router = express.Router();
 import {
   deletePhoto,
   getAllPhotos,
+  getUserPhotos,
   insertPhoto,
 } from "../controllers/PhotoController";
 import { authGuard } from "../middlewares/authGuard";
@@ -26,5 +27,6 @@ router.post(
 );
 router.delete("/:id", authGuard, deletePhoto);
 router.get("/", getAllPhotos);
+router.get("/user/:id", getUserPhotos);
 
 export { router as PhotoRoutes };
