@@ -67,4 +67,11 @@ const deletePhoto = async (req: IDeletePhotoRequest, res: Response) => {
     .json({ id: photo._id, message: "Foto excluída com sucesso." });
 };
 
-export { insertPhoto, deletePhoto };
+// Get all photos
+const getAllPhotos = async (_, res: Response) => {
+  const photos = await PhotoModel.find({}).sort({ createdAt: "desc" }).exec();
+
+  return res.status(200).json(photos);
+};
+
+export { insertPhoto, deletePhoto, getAllPhotos };
