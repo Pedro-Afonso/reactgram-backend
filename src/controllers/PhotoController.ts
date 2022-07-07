@@ -177,6 +177,46 @@ const likePhoto = async (req: ILikePhotoRequest, res: Response) => {
     .json({ photoId: id, userId: reqUser._id, message: "A foto foi curtida!" });
 };
 
+interface ICommentPhotoRequest extends Request {
+  user: IUser;
+}
+// Comment functionality
+const commentPhoto = async (req: ICommentPhotoRequest, res: Response) => {
+  const { id } = req.params;
+  const { comment } = req.body;
+
+  const reqUser = req.user;
+
+  const user = await UserModel.findById(reqUser._id);
+
+  const photo = await PhotoModel.findById(id);
+
+  // Check if photo exists
+  if (!photo) {
+    res.status(404).json({ errors: ["Foto não encontrada!"] });
+    return;
+  }
+
+  // Put comment in the array of comments
+  const userComment = {
+    comment,
+    userName: user.name,
+    userImage: user.profileImage,
+    userId: user._id,
+  };
+
+  photo.comments.push(userComment);
+
+  await photo.save();
+
+  res
+    .status(200)
+    .json({
+      comment: userComment,
+      message: "Comentário adicionado com sucesso!",
+    });
+};
+
 export {
   insertPhoto,
   deletePhoto,
@@ -185,4 +225,5 @@ export {
   getPhotoById,
   updatePhoto,
   likePhoto,
+  commentPhoto,
 };
