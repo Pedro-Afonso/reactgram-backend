@@ -3,7 +3,11 @@ import express from "express";
 const router = express.Router();
 
 // Controller
-import { deletePhoto, insertPhoto } from "../controllers/PhotoController";
+import {
+  deletePhoto,
+  getAllPhotos,
+  insertPhoto,
+} from "../controllers/PhotoController";
 import { authGuard } from "../middlewares/authGuard";
 import { validate } from "../middlewares/handleValidations";
 import { imageUpload } from "../middlewares/imageUpload";
@@ -21,5 +25,6 @@ router.post(
   insertPhoto
 );
 router.delete("/:id", authGuard, deletePhoto);
+router.get("/", getAllPhotos);
 
 export { router as PhotoRoutes };
