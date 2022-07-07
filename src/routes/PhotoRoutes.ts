@@ -6,6 +6,7 @@ const router = express.Router();
 import {
   deletePhoto,
   getAllPhotos,
+  getPhotoById,
   getUserPhotos,
   insertPhoto,
   searchPhotos,
@@ -30,5 +31,6 @@ router.delete("/:id", authGuard, deletePhoto);
 router.get("/", getAllPhotos);
 router.get("/user/:id", getUserPhotos);
 router.get("/search", searchPhotos);
+router.get("/:id", getPhotoById);
 
 export { router as PhotoRoutes };
