@@ -1,5 +1,6 @@
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
+import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
@@ -150,4 +151,20 @@ const update = async (req: IUpdateRequest, res: Response) => {
   res.status(200).json(user);
 };
 
-export { register, getCurrentUser, login, update };
+// Get user by id
+const getUserById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const user = await UserModel.findById(new mongoose.Types.ObjectId(id)).select(
+    "-password"
+  );
+
+  // Check if user exists
+  if (!user) {
+    res.status(404).json({ errors: ["Usuário não encontrado!"] });
+  }
+
+  res.status(200).json(user);
+};
+
+export { register, getCurrentUser, login, update, getUserById };

@@ -6,6 +6,7 @@ import {
   login,
   getCurrentUser,
   update,
+  getUserById,
 } from "../controllers/UserController";
 
 // Middlewares
@@ -31,5 +32,6 @@ router.put(
   validate,
   update
 );
+router.get("/:id", getUserById);
 
 export { router as UserRoutes };
