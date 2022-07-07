@@ -8,6 +8,7 @@ import {
   getAllPhotos,
   getUserPhotos,
   insertPhoto,
+  searchPhotos,
 } from "../controllers/PhotoController";
 import { authGuard } from "../middlewares/authGuard";
 import { validate } from "../middlewares/handleValidations";
@@ -28,5 +29,6 @@ router.post(
 router.delete("/:id", authGuard, deletePhoto);
 router.get("/", getAllPhotos);
 router.get("/user/:id", getUserPhotos);
+router.get("/search", searchPhotos);
 
 export { router as PhotoRoutes };
