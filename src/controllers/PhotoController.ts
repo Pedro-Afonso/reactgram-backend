@@ -209,12 +209,21 @@ const commentPhoto = async (req: ICommentPhotoRequest, res: Response) => {
 
   await photo.save();
 
-  res
-    .status(200)
-    .json({
-      comment: userComment,
-      message: "Comentário adicionado com sucesso!",
-    });
+  res.status(200).json({
+    comment: userComment,
+    message: "Comentário adicionado com sucesso!",
+  });
+};
+
+// Search a photo by title
+const searchPhotos = async (req: Request, res: Response) => {
+  const { q } = req.query;
+
+  const photos = await PhotoModel.find({
+    title: { $regex: q, $options: "i" },
+  }).exec();
+
+  res.status(200).json(photos);
 };
 
 export {
@@ -226,4 +235,5 @@ export {
   updatePhoto,
   likePhoto,
   commentPhoto,
+  searchPhotos,
 };
