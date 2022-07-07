@@ -12,8 +12,6 @@ const insertPhoto = async (req: IInsertPhotoRequest, res: Response) => {
   const { title } = req.body;
   const image = req.file.filename;
 
-  const reqUser = req.user;
-
   const user = await UserModel.findById(req.user._id);
 
   // Create photo
