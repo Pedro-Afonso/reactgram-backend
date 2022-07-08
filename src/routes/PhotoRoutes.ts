@@ -10,11 +10,15 @@ import {
   getUserPhotos,
   insertPhoto,
   searchPhotos,
+  updatePhoto,
 } from "../controllers/PhotoController";
 import { authGuard } from "../middlewares/authGuard";
 import { validate } from "../middlewares/handleValidations";
 import { imageUpload } from "../middlewares/imageUpload";
-import { photoInsertValidation } from "../middlewares/photoValidation";
+import {
+  photoInsertValidation,
+  photoUpdateValidation,
+} from "../middlewares/photoValidation";
 
 // Middleware
 
@@ -32,5 +36,13 @@ router.get("/", getAllPhotos);
 router.get("/user/:id", getUserPhotos);
 router.get("/search", searchPhotos);
 router.get("/:id", getPhotoById);
+router.put(
+  "/:id",
+  authGuard,
+  imageUpload.single("image"),
+  photoUpdateValidation(),
+  validate,
+  updatePhoto
+);
 
 export { router as PhotoRoutes };
