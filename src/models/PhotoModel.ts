@@ -26,7 +26,7 @@ const photoSchema = new Schema(
     comments: [
       {
         comment: { type: String, required: true },
-        username: { type: String, required: true },
+        userName: { type: String, required: true },
         userImage: { type: String },
         userId: { type: String, required: true },
       },
