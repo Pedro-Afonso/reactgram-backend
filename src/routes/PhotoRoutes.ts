@@ -9,6 +9,7 @@ import {
   getPhotoById,
   getUserPhotos,
   insertPhoto,
+  likePhoto,
   searchPhotos,
   updatePhoto,
 } from "../controllers/PhotoController";
@@ -44,5 +45,5 @@ router.put(
   validate,
   updatePhoto
 );
-
+router.put("/like/:id", authGuard, likePhoto);
 export { router as PhotoRoutes };
