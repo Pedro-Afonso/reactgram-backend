@@ -24,5 +24,8 @@ dist-ssr
 *.sw?
 
 # Uploaded images
-src/uploads/users
-src/uploads/photos
+src/uploads/photos/*.jpg
+src/uploads/users/*.jpg
+src/uploads/photos/*.png
+src/uploads/users/*.png
+
