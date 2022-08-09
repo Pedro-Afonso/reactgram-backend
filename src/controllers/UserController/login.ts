@@ -3,14 +3,8 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
+import { generateToken } from "../../utils";
 import { UserModel, IUser } from "../../models/UserModel";
-
-const jwtSecret = process.env.JWT_SECRET;
-
-// Generate user token
-const generateToken = (id: number): string => {
-  return jwt.sign({ id }, jwtSecret, { expiresIn: "5d" });
-};
 
 interface ILoginRequest extends Request {
   body: {

@@ -1,16 +1,7 @@
-import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
 
+import { generatePasswordHash, generateToken } from "../../utils";
 import { UserModel, IUser } from "../../models/UserModel";
-
-const jwtSecret = process.env.JWT_SECRET;
-
-// Generate user token
-const generateToken = (id: number): string => {
-  return jwt.sign({ id }, jwtSecret, { expiresIn: "5d" });
-};
 
 interface IRegisterRequest extends Request {
   body: IUser;
@@ -34,8 +25,7 @@ export const register = async (
   }
 
   // Generate password hash
-  const salt = await bcrypt.genSalt();
-  const passwordHash = await bcrypt.hash(password, salt);
+  const passwordHash = await generatePasswordHash(password);
 
   // Create user
   const newUser = await UserModel.create({

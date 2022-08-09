@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 import "dotenv/config";
 
+import { generatePasswordHash } from "../../utils";
 import { UserModel, IUser } from "../../models/UserModel";
 
 interface IUpdateRequest extends Request {
@@ -30,9 +31,7 @@ export const update = async (req: IUpdateRequest, res: Response) => {
     user.name = name;
   }
   if (password) {
-    const salt = await bcrypt.genSalt();
-    const passwordHash = await bcrypt.hash(password, salt);
-    user.password = passwordHash;
+    user.password = await generatePasswordHash(password);
   }
 
   if (profileImage) {
@@ -40,7 +39,11 @@ export const update = async (req: IUpdateRequest, res: Response) => {
   }
 
   if (bio) {
-    user.bio = bio;
+    if (bio === "undefined") {
+      user.bio = "";
+    } else {
+      user.bio = bio;
+    }
   }
 
   await user.save();
