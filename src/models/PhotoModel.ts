@@ -1,5 +1,4 @@
 import mongoose, { Types, Schema } from "mongoose";
-import { userCreateValidation } from "../middlewares/userValidations";
 import { IUser } from "./UserModel";
 
 interface IComment {

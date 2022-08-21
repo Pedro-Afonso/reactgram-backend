@@ -17,7 +17,7 @@ import {
   userUpdateValidation,
 } from "../middlewares/userValidations";
 import { authGuard } from "../middlewares/authGuard";
-import { imageUpload } from "../middlewares/imageUpload";
+import { imageUploadS3 } from "../middlewares/imageUpload";
 
 const router = express();
 
@@ -27,7 +27,7 @@ router.post("/login", loginValidation(), validate, login);
 router.put(
   "/",
   authGuard,
-  imageUpload.single("profileImage"),
+  imageUploadS3("reactgram-network").single("profileImage"),
   userUpdateValidation(),
   validate,
   update

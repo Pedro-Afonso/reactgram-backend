@@ -1,36 +1,41 @@
-import path from "path";
+import { S3Client } from "@aws-sdk/client-s3";
+import multerS3 from "multer-s3";
 import multer from "multer";
+import path from "path";
 
 // Destination to store image
-const imageStorage = multer.diskStorage({
-  destination(req, _, cb) {
-    let folder = "";
 
-    if (req.baseUrl.includes("users")) {
-      folder = "users";
-    } else if (req.baseUrl.includes("photos")) {
-      folder = "photos";
-    }
-    cb(null, `src/uploads/${folder}`);
-  },
-
-  filename: (_, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+const s3 = new S3Client({
+  region: process.env.S3_REGION,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY_ID,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
   },
 });
 
-const imageUpload = multer({
-  storage: imageStorage,
-  fileFilter(req, file, cb) {
-    // upload only png and jpg format
-    if (!file.originalname.match(/\.(png|jpg)$/)) {
-      return cb(
-        new Error("Por favor, envie apenas fotos no formato png ou jpg!")
-      );
-    }
+const imageUploadS3 = (bucket: string) =>
+  multer({
+    storage: multerS3({
+      s3,
+      bucket: bucket,
+      metadata: function (_, file, cb) {
+        cb(null, { fieldName: file.fieldname });
+      },
 
-    cb(null, true);
-  },
-});
+      key: function (_, file, cb) {
+        cb(null, `${Date.now()}${path.extname(file.originalname)}`);
+      },
+    }),
+    fileFilter(_, file, cb) {
+      // upload only png and jpg format
+      if (!file.originalname.match(/\.(png|jpg)$/)) {
+        return cb(
+          new Error("Por favor, envie apenas fotos no formato png ou jpg!")
+        );
+      }
 
-export { imageUpload };
+      cb(null, true);
+    },
+  });
+
+export { imageUploadS3 };

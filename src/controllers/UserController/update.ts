@@ -13,14 +13,15 @@ interface IUpdateRequest extends Request {
   };
   user: IUser;
 }
+
 // Update user
-export const update = async (req: IUpdateRequest, res: Response) => {
+export const update = async (req: any, res: Response) => {
   const { name, password, bio } = req.body;
 
   let profileImage = null;
 
   if (req.file) {
-    profileImage = req.file.filename;
+    profileImage = req.file.location;
   }
 
   const reqUser = req.user;

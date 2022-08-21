@@ -7,14 +7,14 @@ interface IUpdatePhotoRequest extends Request {
   user: IUser;
 }
 // Update a photo
-export const updatePhoto = async (req: IUpdatePhotoRequest, res: Response) => {
+export const updatePhoto = async (req: any, res: Response) => {
   const { id } = req.params;
   const { title } = req.body;
 
   let image;
 
   if (req.file) {
-    image = req.file.filename;
+    image = req.file.location;
   }
 
   const reqUser = req.user;

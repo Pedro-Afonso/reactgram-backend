@@ -22,14 +22,14 @@ import {
   photoUpdateValidation,
 } from "../middlewares/photoValidation";
 import { validate } from "../middlewares/handleValidations";
-import { imageUpload } from "../middlewares/imageUpload";
+import { imageUploadS3 } from "../middlewares/imageUpload";
 import { authGuard } from "../middlewares/authGuard";
 
 // Routes
 router.post(
   "/",
   authGuard,
-  imageUpload.single("image"),
+  imageUploadS3("reactgram-network").single("image"),
   photoInsertValidation(),
   validate,
   insertPhoto
@@ -42,7 +42,7 @@ router.get("/:id", getPhotoById);
 router.put(
   "/:id",
   authGuard,
-  imageUpload.single("image"),
+  imageUploadS3("reactgram-network").single("image"),
   photoUpdateValidation(),
   validate,
   updatePhoto

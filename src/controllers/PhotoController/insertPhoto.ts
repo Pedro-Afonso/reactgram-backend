@@ -8,9 +8,9 @@ interface IInsertPhotoRequest extends Request {
 }
 
 // Insert a photo, with an user related to it
-export const insertPhoto = async (req: IInsertPhotoRequest, res: Response) => {
+export const insertPhoto = async (req: any, res: Response) => {
   const { title } = req.body;
-  const image = req.file.filename;
+  const image = req.file.location;
 
   const user = await UserModel.findById(req.user._id);
 
