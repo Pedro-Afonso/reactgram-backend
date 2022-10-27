@@ -1,48 +1,46 @@
-import { body } from "express-validator";
+import { body } from 'express-validator'
 
 const photoInsertValidation = () => {
   return [
-    body("title")
+    body('title')
       .not()
-      .equals("undefined")
-      .withMessage("O título é obrigatório.")
+      .equals('undefined')
+      .withMessage('O título é obrigatório.')
       .isString()
-      .withMessage("O título é obrigarório.")
+      .withMessage('O título é obrigarório.')
       .isLength({ min: 3 })
-      .withMessage("O nome precisa ter no mínimo 3 caracteres."),
-    body("image").custom((_, { req }) => {
+      .withMessage('O nome precisa ter no mínimo 3 caracteres.'),
+    body('image').custom((_, { req }) => {
       if (!req.file) {
-        throw new Error("A imagem é obrigatória.");
+        throw new Error('A imagem é obrigatória.')
       }
 
-      return true;
-    }),
-  ];
-};
+      return true
+    })
+  ]
+}
 
 const photoUpdateValidation = () => {
   return [
-    body("image")
+    body('image')
       .optional()
       .custom((value, { req }) => {
         if (!req.file) {
-          throw new Error("A imagem é obrigatória");
+          throw new Error('A imagem é obrigatória')
         }
-        return true;
+        return true
       }),
-    body("title")
+    body('title')
       .optional()
       .isString()
-      .withMessage("O título é obrigatório")
+      .withMessage('O título é obrigatório')
       .isLength({ min: 3 })
-      .withMessage("O nome precisa ter no mínimo 3 caracteres"),
-  ];
-};
+      .withMessage('O nome precisa ter no mínimo 3 caracteres')
+  ]
+}
 
 const commmentValidation = () => {
-  return [
-    body("comment").isString().withMessage("O comentário é obrigatório."),
-  ];
-};
+  return [body('comment').isString().withMessage('O comentário é obrigatório.')]
+}
 
-export { photoInsertValidation, photoUpdateValidation, commmentValidation };
+export { photoInsertValidation, photoUpdateValidation, commmentValidation }

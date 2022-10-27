@@ -1,13 +1,14 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import "dotenv/config";
+import { Request, Response, NextFunction } from 'express'
+// eslint-disable-next-line import/default
+import jwt from 'jsonwebtoken'
+import 'dotenv/config'
 
-import { IUser, UserModel } from "../models/UserModel";
+import { IUser, UserModel } from '../models/UserModel'
 
-const jwtSecret = process.env.JWT_SECRET;
+const jwtSecret = process.env.JWT_SECRET
 
 interface IAuthGuardRequest extends Request {
-  user: IUser;
+  user: IUser
 }
 
 const authGuard = async (
@@ -15,24 +16,24 @@ const authGuard = async (
   res: Response,
   next: NextFunction
 ): Promise<Response | void> => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
+  const authHeader = req.headers.authorization
+  const token = authHeader && authHeader.split(' ')[1]
 
   // Check if header has a token
   if (!token) {
-    return res.status(401).json({ errors: ["Acesso negado!"] });
+    return res.status(401).json({ errors: ['Acesso negado!'] })
   }
 
   // Check if token is valid
   try {
-    const verified = jwt.verify(token, jwtSecret) as IUser;
+    const verified = jwt.verify(token, jwtSecret) as IUser
 
-    req.user = await UserModel.findById(verified.id).select("-password");
+    req.user = await UserModel.findById(verified.id).select('-password')
 
-    next();
+    next()
   } catch (error) {
-    res.status(400).json({ errors: ["O Token é inválido!"] });
+    res.status(400).json({ errors: ['O Token é inválido!'] })
   }
-};
+}
 
-export { authGuard };
+export { authGuard }

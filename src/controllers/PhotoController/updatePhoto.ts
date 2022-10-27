@@ -1,49 +1,49 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
-import { PhotoModel } from "../../models/PhotoModel";
-import { IUser } from "../../models/UserModel";
+import { PhotoModel } from '../../models/PhotoModel'
+import { IUser } from '../../models/UserModel'
 
 interface IUpdatePhotoRequest extends Request {
-  user: IUser;
+  user: IUser
 }
 // Update a photo
 export const updatePhoto = async (req: IUpdatePhotoRequest, res: Response) => {
-  const { id } = req.params;
-  const { title } = req.body;
+  const { id } = req.params
+  const { title } = req.body
 
-  let image;
+  let image
 
   if (req.file) {
-    image = req.file.filename;
+    image = req.file.filename
   }
 
-  const reqUser = req.user;
+  const reqUser = req.user
 
-  const photo = await PhotoModel.findById(id);
+  const photo = await PhotoModel.findById(id)
 
   // Check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ["Foto não encontrada."] });
-    return;
+    res.status(404).json({ errors: ['Foto não encontrada.'] })
+    return
   }
 
   // Check if photo belongs to user
   if (!photo.userId.equals(reqUser._id)) {
     res
       .status(422)
-      .json({ errors: ["Ocorreu um erro, tente novamente mais tarde"] });
-    return;
+      .json({ errors: ['Ocorreu um erro, tente novamente mais tarde'] })
+    return
   }
 
   if (title) {
-    photo.title = title;
+    photo.title = title
   }
 
   if (image) {
-    photo.image = image;
+    photo.image = image
   }
 
-  await photo.save();
+  await photo.save()
 
-  res.status(200).json({ photo, message: "Foto atualizada com sucesso!" });
-};
+  res.status(200).json({ photo, message: 'Foto atualizada com sucesso!' })
+}

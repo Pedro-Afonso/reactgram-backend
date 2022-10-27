@@ -1,21 +1,20 @@
-import mongoose, { Types, Schema } from "mongoose";
-import { userCreateValidation } from "../middlewares/userValidations";
-import { IUser } from "./UserModel";
+import mongoose, { Types, Schema } from 'mongoose'
+import { IUser } from './UserModel'
 
 interface IComment {
-  comment: string;
-  userName: IUser["name"];
-  userImage: IUser["profileImage"];
-  userId: IUser["_id"];
+  comment: string
+  userName: IUser['name']
+  userImage: IUser['profileImage']
+  userId: IUser['_id']
 }
 
 export interface IPhoto {
-  image: string;
-  title: string;
-  likes: Array<IUser["_id"]>;
-  comments: IComment[];
-  userId: Types.ObjectId;
-  userName: string;
+  image: string
+  title: string
+  likes: Array<IUser['_id']>
+  comments: IComment[]
+  userId: Types.ObjectId
+  userName: string
 }
 
 const photoSchema = new Schema(
@@ -28,15 +27,15 @@ const photoSchema = new Schema(
         comment: { type: String, required: true },
         userName: { type: String, required: true },
         userImage: { type: String },
-        userId: { type: String, required: true },
-      },
+        userId: { type: String, required: true }
+      }
     ],
     userId: { type: Schema.Types.ObjectId },
-    userName: { type: String, required: true },
+    userName: { type: String, required: true }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
-);
+)
 
-export const PhotoModel = mongoose.model<IPhoto>("Photo", photoSchema);
+export const PhotoModel = mongoose.model<IPhoto>('Photo', photoSchema)

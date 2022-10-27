@@ -1,60 +1,60 @@
-import { body, ValidationChain } from "express-validator";
+import { body, ValidationChain } from 'express-validator'
 
 const userCreateValidation = (): ValidationChain[] => {
   return [
-    body("name")
+    body('name')
       .isString()
-      .withMessage("O nome é obrigatório")
+      .withMessage('O nome é obrigatório')
       .isLength({ min: 3 })
-      .withMessage("O nome precisa ter no mínimo 3 caracteres"),
-    body("email")
+      .withMessage('O nome precisa ter no mínimo 3 caracteres'),
+    body('email')
       .isString()
-      .withMessage("O email é obrigatório")
+      .withMessage('O email é obrigatório')
       .isEmail()
-      .withMessage("Insira um e-mail válido"),
-    body("password")
+      .withMessage('Insira um e-mail válido'),
+    body('password')
       .isString()
-      .withMessage("A senha é obrigatória.")
+      .withMessage('A senha é obrigatória.')
       .isLength({ min: 8 })
-      .withMessage("A senha precisa de no mínimo 8 caracteres."),
-    body("confirmPassword")
+      .withMessage('A senha precisa de no mínimo 8 caracteres.'),
+    body('confirmPassword')
       .isString()
-      .withMessage("A confirmação de senha é obrigatória.")
+      .withMessage('A confirmação de senha é obrigatória.')
       .custom((value, { req }) => {
         if (value !== req.body.password) {
-          throw new Error("As senhas não são iguais.");
+          throw new Error('As senhas não são iguais.')
         }
-        return true;
-      }),
-  ];
-};
+        return true
+      })
+  ]
+}
 
 const loginValidation = (): ValidationChain[] => {
   return [
-    body("email")
+    body('email')
       .isString()
-      .withMessage("O e-mail é obrigatório.")
+      .withMessage('O e-mail é obrigatório.')
       .isEmail()
-      .withMessage("Insira um e-mail válido."),
-    body("password")
+      .withMessage('Insira um e-mail válido.'),
+    body('password')
       .isString()
-      .withMessage("O senha é obrigatória.")
+      .withMessage('O senha é obrigatória.')
       .isLength({ min: 8 })
-      .withMessage("A senha precisa de no mínimo 8 caracteres."),
-  ];
-};
+      .withMessage('A senha precisa de no mínimo 8 caracteres.')
+  ]
+}
 
 const userUpdateValidation = (): ValidationChain[] => {
   return [
-    body("name")
+    body('name')
       .optional()
       .isLength({ min: 3 })
-      .withMessage("O nome precisa ter no mínimo 3 caracteres."),
-    body("password")
+      .withMessage('O nome precisa ter no mínimo 3 caracteres.'),
+    body('password')
       .optional()
       .isLength({ min: 8 })
-      .withMessage("A senha precisa de no mínimo 8 caracteres."),
-  ];
-};
+      .withMessage('A senha precisa de no mínimo 8 caracteres.')
+  ]
+}
 
-export { userCreateValidation, loginValidation, userUpdateValidation };
+export { userCreateValidation, loginValidation, userUpdateValidation }

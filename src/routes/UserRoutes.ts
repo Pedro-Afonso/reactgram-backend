@@ -1,4 +1,4 @@
-import express from "express";
+import express from 'express'
 
 // Controllers
 import {
@@ -6,32 +6,32 @@ import {
   login,
   getCurrentUser,
   update,
-  getUserById,
-} from "../controllers/UserController";
+  getUserById
+} from '../controllers/UserController'
 
 // Middlewares
-import { validate } from "../middlewares/handleValidations";
+import { validate } from '../middlewares/handleValidations'
 import {
   loginValidation,
   userCreateValidation,
-  userUpdateValidation,
-} from "../middlewares/userValidations";
-import { authGuard } from "../middlewares/authGuard";
-import { imageUpload } from "../middlewares/imageUpload";
+  userUpdateValidation
+} from '../middlewares/userValidations'
+import { authGuard } from '../middlewares/authGuard'
+import { imageUpload } from '../middlewares/imageUpload'
 
-const router = express();
+const router = express()
 
-router.post("/register", userCreateValidation(), validate, register);
-router.get("/profile", authGuard, getCurrentUser);
-router.post("/login", loginValidation(), validate, login);
+router.post('/register', userCreateValidation(), validate, register)
+router.get('/profile', authGuard, getCurrentUser)
+router.post('/login', loginValidation(), validate, login)
 router.put(
-  "/",
+  '/',
   authGuard,
-  imageUpload.single("profileImage"),
+  imageUpload.single('profileImage'),
   userUpdateValidation(),
   validate,
   update
-);
-router.get("/:id", getUserById);
+)
+router.get('/:id', getUserById)
 
-export { router as UserRoutes };
+export { router as UserRoutes }

@@ -1,6 +1,4 @@
-import express from "express";
-
-const router = express.Router();
+import express from 'express'
 
 // Controller
 import {
@@ -12,48 +10,50 @@ import {
   insertPhoto,
   likePhoto,
   searchPhotos,
-  updatePhoto,
-} from "../controllers/PhotoController";
+  updatePhoto
+} from '../controllers/PhotoController'
 
 // Middleware
 import {
   commmentValidation,
   photoInsertValidation,
-  photoUpdateValidation,
-} from "../middlewares/photoValidation";
-import { validate } from "../middlewares/handleValidations";
-import { imageUpload } from "../middlewares/imageUpload";
-import { authGuard } from "../middlewares/authGuard";
+  photoUpdateValidation
+} from '../middlewares/photoValidation'
+import { validate } from '../middlewares/handleValidations'
+import { imageUpload } from '../middlewares/imageUpload'
+import { authGuard } from '../middlewares/authGuard'
+
+const router = express.Router()
 
 // Routes
 router.post(
-  "/",
+  '/',
   authGuard,
-  imageUpload.single("image"),
+  imageUpload.single('image'),
   photoInsertValidation(),
   validate,
   insertPhoto
-);
-router.delete("/:id", authGuard, deletePhoto);
-router.get("/", getAllPhotos);
-router.get("/user/:id", getUserPhotos);
-router.get("/search", searchPhotos);
-router.get("/:id", getPhotoById);
+)
+router.delete('/:id', authGuard, deletePhoto)
+router.get('/', getAllPhotos)
+router.get('/user/:id', getUserPhotos)
+router.get('/search', searchPhotos)
+router.get('/:id', getPhotoById)
 router.put(
-  "/:id",
+  '/:id',
   authGuard,
-  imageUpload.single("image"),
+  imageUpload.single('image'),
   photoUpdateValidation(),
   validate,
   updatePhoto
-);
-router.put("/like/:id", authGuard, likePhoto);
+)
+router.put('/like/:id', authGuard, likePhoto)
 router.put(
-  "/comment/:id",
+  '/comment/:id',
   authGuard,
   commmentValidation(),
   validate,
   commentPhoto
-);
+)
 
-export { router as PhotoRoutes };
+export { router as PhotoRoutes }
