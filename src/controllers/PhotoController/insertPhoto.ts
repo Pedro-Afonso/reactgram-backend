@@ -1,19 +1,18 @@
-import { Request, Response } from 'express'
-import { IPhoto, PhotoModel } from '../../models/PhotoModel'
-import { IUser, UserModel } from '../../models/UserModel'
+import { Response } from 'express'
+import { PhotoModel } from '../../models/PhotoModel'
+import { UserModel } from '../../models/UserModel'
 
-interface IInsertPhotoRequest extends Request {
+/* interface IInsertPhotoRequest extends Request {
   body: IPhoto
   user: IUser
-}
+} */
 
 // Insert a photo, with an user related to it
-export const insertPhoto = async (req: IInsertPhotoRequest, res: Response) => {
+export const insertPhoto = async (req: any, res: Response) => {
   const { title } = req.body
-  const image = req.file.filename
+  const image = `https://reactgram-network.s3.sa-east-1.amazonaws.com/${req.file.key}`
 
   const user = await UserModel.findById(req.user._id)
-
   // Create photo
   const newPhoto = await PhotoModel.create({
     image,

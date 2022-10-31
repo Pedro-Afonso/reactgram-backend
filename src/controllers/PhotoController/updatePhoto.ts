@@ -11,10 +11,10 @@ export const updatePhoto = async (req: IUpdatePhotoRequest, res: Response) => {
   const { id } = req.params
   const { title } = req.body
 
-  let image
+  let image = null
 
   if (req.file) {
-    image = req.file.filename
+    image = `https://reactgram-network.s3.sa-east-1.amazonaws.com/${req.file.key}`
   }
 
   const reqUser = req.user

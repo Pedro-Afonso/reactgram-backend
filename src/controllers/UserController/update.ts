@@ -19,7 +19,7 @@ export const update = async (req: IUpdateRequest, res: Response) => {
   let profileImage = null
 
   if (req.file) {
-    profileImage = req.file.filename
+    profileImage = `https://reactgram-network.s3.sa-east-1.amazonaws.com/${req.file.key}`
   }
 
   const reqUser = req.user
