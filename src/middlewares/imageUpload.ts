@@ -35,7 +35,8 @@ const imageUploadS3 = (bucket: string) =>
       }
 
       cb(null, true)
-    }
+    },
+    limits: { fileSize: 1000000 }
   })
 
 export { imageUploadS3 }
