@@ -10,7 +10,7 @@ import { UserModel } from '../../models/UserModel'
 // Insert a photo, with an user related to it
 export const insertPhoto = async (req: any, res: Response) => {
   const { title } = req.body
-  const image = `https://reactgram-network.s3.sa-east-1.amazonaws.com/${req.file.key}`
+  const image = req.file.location
 
   const user = await UserModel.findById(req.user._id)
   // Create photo
