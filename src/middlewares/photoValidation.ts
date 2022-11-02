@@ -40,7 +40,18 @@ const photoUpdateValidation = () => {
 }
 
 const commmentValidation = () => {
-  return [body('comment').isString().withMessage('O comentário é obrigatório.')]
+  return [
+    body('comment')
+      .trim()
+      .not()
+      .isEmpty()
+      .withMessage('O comentário é obrigatório.')
+      .not()
+      .equals('undefined')
+      .withMessage('O comentário é obrigatório.')
+      .isString()
+      .withMessage('O comentário é obrigatório.')
+  ]
 }
 
 export { photoInsertValidation, photoUpdateValidation, commmentValidation }
