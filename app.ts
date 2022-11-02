@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express'
 import cors, { CorsOptions } from 'cors'
-import path from 'path'
+// import path from 'path'
 
 // routes
 import { router } from './src/routes/Router'
@@ -24,7 +24,7 @@ const corsOptions: CorsOptions = {
 app.use(cors(corsOptions))
 
 // Upload directory
-app.use('/uploads', express.static(path.join(__dirname, '/src/uploads')))
+// app.use('/uploads', express.static(path.join(__dirname, '/src/uploads')))
 
 // teste route
 app.get('/', (req: Request, res: Response) => {
