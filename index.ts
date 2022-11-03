@@ -32,7 +32,7 @@ app.use(cors(corsOptions))
 
 // teste route
 app.get('/', (req: Request, res: Response) => {
-  res.send('API is working!')
+  res.send(`API is working!${allowedOrigins}`)
 })
 
 app.use(router)
