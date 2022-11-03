@@ -8,7 +8,7 @@ import { router } from './src/routes/Router'
 // database connection
 import { conn } from './src/config/db'
 
-const port = process.env.PORT
+const port = process.env.PORT || '5000'
 const app = express()
 
 // Config JSON and form data response
@@ -16,7 +16,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Solve Cors
-const allowedOrigins = ['http://localhost:3000']
+const allowedOrigins = [
+  process.env.ALLOWED_ORIGIN_1,
+  process.env.ALLOWED_ORIGIN_2,
+  process.env.ALLOWED_ORIGIN_3
+]
 const corsOptions: CorsOptions = {
   credentials: true,
   origin: allowedOrigins
