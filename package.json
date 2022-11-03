@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "lint": "eslint src --ext ts,tsx --max-warnings=0",
     "check-format": "prettier --check .",
