@@ -23,7 +23,7 @@ const allowedOrigins = [
 ]
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: allowedOrigins
+  origin: ['https://reactgram-frontend.vercel.app']
 }
 app.use(cors(corsOptions))
 
