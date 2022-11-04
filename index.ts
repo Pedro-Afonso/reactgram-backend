@@ -39,15 +39,12 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(router)
 
-mongoose.connect(dbUri, function (err) {
-  if (err) {
-    // eslint-disable-next-line no-console
-    console.log(err)
-  } else {
-    // eslint-disable-next-line no-console
-    console.log('Database connection successful!')
-  }
-})
+mongoose
+  .connect(dbUri)
+  // eslint-disable-next-line no-console
+  .then(() => console.log('Database connection successful!'))
+  // eslint-disable-next-line no-console
+  .catch(err => console.log(err))
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
