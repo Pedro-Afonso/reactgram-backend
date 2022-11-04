@@ -25,9 +25,9 @@ const allowedOrigins = [
 ]
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: ['https://reactgram-frontend.vercel.app', 'http://localhost:3000']
+  origin: allowedOrigins
 }
-app.use(cors())
+app.use(cors(corsOptions))
 
 // Upload directory
 // app.use('/uploads', express.static(path.join(__dirname, '/src/uploads')))
