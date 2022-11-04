@@ -4,7 +4,7 @@ import 'dotenv/config'
 
 const dbUri = process.env.DB_MONGO_URI
 
-const conn = async () => {
+export async function connectToDatabase() {
   try {
     const dbConn = await mongoose.connect(dbUri)
     console.log('Database connection successful!')
@@ -13,5 +13,3 @@ const conn = async () => {
     console.log(error)
   }
 }
-
-export { conn }

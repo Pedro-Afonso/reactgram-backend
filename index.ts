@@ -1,13 +1,15 @@
 import express, { Request, Response } from 'express'
 import cors, { CorsOptions } from 'cors'
-// import path from 'path'
+import mongoose from 'mongoose'
+import 'dotenv/config'
 
 // routes
 import { router } from './src/routes/Router'
 
 // database connection
-import { conn } from './src/config/db'
+// import { connectToDatabase } from './src/config/db'
 
+const dbUri = process.env.DB_MONGO_URI
 const port = process.env.PORT || '5000'
 const app = express()
 
@@ -37,7 +39,16 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(router)
 
-// conn()
+mongoose.connect(dbUri, function (err) {
+  if (err) {
+    // eslint-disable-next-line no-console
+    console.log(err)
+  } else {
+    // eslint-disable-next-line no-console
+    console.log('Database connection successful!')
+  }
+})
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log('App is working!')
