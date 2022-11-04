@@ -5,7 +5,7 @@ import { PhotoModel } from '../../models/PhotoModel'
 
 // Get all photos
 export const getAllPhotos = async (_, res: Response) => {
-  await conn()
+  conn()
 
   const photos = await PhotoModel.find({}).sort({ createdAt: 'desc' }).exec()
 
