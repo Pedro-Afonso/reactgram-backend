@@ -37,7 +37,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use(router)
 
-conn()
+// conn()
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log('App is working!')
