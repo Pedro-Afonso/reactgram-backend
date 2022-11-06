@@ -18,14 +18,21 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Solve Cors
-const allowedOrigins = [
-  process.env.ALLOWED_ORIGIN_1,
-  process.env.ALLOWED_ORIGIN_2,
-  process.env.ALLOWED_ORIGIN_3
-]
+const configCorsOrigin = () => {
+  if (process.env.NODE_ENV === 'PRODUCTION') {
+    return [
+      process.env.ALLOWED_ORIGIN_1,
+      process.env.ALLOWED_ORIGIN_2,
+      process.env.ALLOWED_ORIGIN_3
+    ]
+  } else {
+    return [`http://localhost:${port}`]
+  }
+}
+
 const corsOptions: CorsOptions = {
   credentials: true,
-  origin: allowedOrigins
+  origin: configCorsOrigin()
 }
 app.use(cors(corsOptions))
 
@@ -34,7 +41,7 @@ app.use(cors(corsOptions))
 
 // teste route
 app.get('/', (req: Request, res: Response) => {
-  res.send(`API is working!${allowedOrigins}`)
+  res.send(`API is working!`)
 })
 
 app.use(router)
