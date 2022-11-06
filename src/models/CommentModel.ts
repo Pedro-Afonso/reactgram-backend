@@ -4,6 +4,8 @@ interface ICommentSchema {
   _id?: string
   comment: string
   user: Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
   __v?: number
 }
 

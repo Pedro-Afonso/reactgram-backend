@@ -5,8 +5,10 @@ export interface IPhoto {
   image?: string
   title?: string
   likes?: Array<Types.ObjectId>
-  comments?: [Types.ObjectId]
+  comments?: Array<Types.ObjectId>
   user?: Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
   __v?: number
 }
 
@@ -14,7 +16,7 @@ const photoSchema = new Schema(
   {
     image: { type: String, required: true },
     title: { type: String, required: true },
-    likes: [{ type: Schema.Types.ObjectId }],
+    likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
     user: { type: Schema.Types.ObjectId, ref: 'User' }
   },

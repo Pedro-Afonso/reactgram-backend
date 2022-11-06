@@ -7,6 +7,8 @@ export interface IUser {
   password: string
   profileImage: string
   bio: string
+  createdAt?: Date
+  updatedAt?: Date
   __v?: number
 }
 
