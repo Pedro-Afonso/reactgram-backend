@@ -1,37 +1,22 @@
 import mongoose, { Types, Schema } from 'mongoose'
-import { IUser } from './UserModel'
-
-interface IComment {
-  comment: string
-  userName: IUser['name']
-  userImage: IUser['profileImage']
-  userId: IUser['_id']
-}
 
 export interface IPhoto {
-  image: string
-  title: string
-  likes: Array<IUser['_id']>
-  comments: IComment[]
-  userId: Types.ObjectId
-  userName: string
+  _id?: string
+  image?: string
+  title?: string
+  likes?: Array<Types.ObjectId>
+  comments?: [Types.ObjectId]
+  user?: Types.ObjectId
+  __v?: number
 }
 
 const photoSchema = new Schema(
   {
     image: { type: String, required: true },
     title: { type: String, required: true },
-    likes: [{ type: String }],
-    comments: [
-      {
-        comment: { type: String, required: true },
-        userName: { type: String, required: true },
-        userImage: { type: String },
-        userId: { type: String, required: true }
-      }
-    ],
-    userId: { type: Schema.Types.ObjectId },
-    userName: { type: String, required: true }
+    likes: [{ type: Schema.Types.ObjectId }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    user: { type: Schema.Types.ObjectId, ref: 'User' }
   },
   {
     timestamps: true
