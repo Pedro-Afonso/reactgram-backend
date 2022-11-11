@@ -27,9 +27,7 @@ export const likePhoto = async (req: ILikePhotoRequest, res: Response) => {
   }
 
   // Put user id in array of likes
-  photo.likes.push(reqUser._id)
-
-  await photo.save()
+  await photo.updateOne({ $push: { likes: reqUser._id } })
 
   res
     .status(200)
