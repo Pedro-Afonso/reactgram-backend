@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 // eslint-disable-next-line import/default
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 import 'dotenv/config'
 
 import { IUser, UserModel } from '../models/UserModel'
@@ -26,7 +26,7 @@ const authGuard = async (
 
   // Check if token is valid
   try {
-    const verified = jwt.verify(token, jwtSecret) as IUser
+    const verified = jwt.verify(token, jwtSecret) as JwtPayload
 
     req.user = await UserModel.findById(verified.id).select('-password')
 
