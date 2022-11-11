@@ -2,20 +2,20 @@ import express from 'express'
 
 // Controller
 import {
-  commentPhoto,
+  /*   commentPhoto, */
+  insertPhoto,
   deletePhoto,
   getAllPhotos,
   getPhotoById,
   getUserPhotos,
-  insertPhoto,
-  likePhoto,
   searchPhotos,
+  likePhoto,
   updatePhoto
 } from '../controllers/PhotoController'
 
 // Middleware
 import {
-  commmentValidation,
+  /*   commmentValidation, */
   photoInsertValidation,
   photoUpdateValidation
 } from '../middlewares/photoValidation'
@@ -39,6 +39,7 @@ router.get('/', getAllPhotos)
 router.get('/user/:id', getUserPhotos)
 router.get('/search', searchPhotos)
 router.get('/:id', getPhotoById)
+router.put('/like/:id', authGuard, likePhoto)
 router.put(
   '/:id',
   authGuard,
@@ -47,13 +48,14 @@ router.put(
   validate,
   updatePhoto
 )
-router.put('/like/:id', authGuard, likePhoto)
-router.put(
+/*
+ */
+/* router.put(
   '/comment/:id',
   authGuard,
   commmentValidation(),
   validate,
   commentPhoto
-)
+) */
 
 export { router as PhotoRoutes }
