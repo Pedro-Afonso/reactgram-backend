@@ -5,7 +5,21 @@ import { PhotoModel } from '../../models/PhotoModel'
 // Get user photos
 export const getUserPhotos = async (req: Request, res: Response) => {
   const { id } = req.params
+
+  const populateOptions = [
+    {
+      path: 'user',
+      select: 'name profileImage'
+    },
+    {
+      path: 'comments',
+      select: 'text user createdAt',
+      populate: { path: 'user', select: 'name profileImage' }
+    }
+  ]
+
   const photos = await PhotoModel.find({ userId: id })
+    .populate(populateOptions)
     .sort({ createdAt: 'desc' })
     .exec()
 

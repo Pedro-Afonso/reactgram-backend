@@ -19,7 +19,19 @@ export const updatePhoto = async (req: IUpdatePhotoRequest, res: Response) => {
 
   const reqUser = req.user
 
-  const photo = await PhotoModel.findById(id)
+  const populateOptions = [
+    {
+      path: 'user',
+      select: 'name profileImage'
+    },
+    {
+      path: 'comments',
+      select: 'text user createdAt',
+      populate: { path: 'user', select: 'name profileImage' }
+    }
+  ]
+
+  const photo = await PhotoModel.findById(id).populate(populateOptions)
 
   // Check if photo exists
   if (!photo) {
@@ -28,7 +40,7 @@ export const updatePhoto = async (req: IUpdatePhotoRequest, res: Response) => {
   }
 
   // Check if photo belongs to user
-  if (!photo.userId.equals(reqUser._id)) {
+  if (!photo.user.equals(reqUser._id)) {
     res
       .status(422)
       .json({ errors: ['Ocorreu um erro, tente novamente mais tarde'] })

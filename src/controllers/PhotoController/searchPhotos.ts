@@ -8,7 +8,9 @@ export const searchPhotos = async (req: Request, res: Response) => {
 
   const photos = await PhotoModel.find({
     title: { $regex: q, $options: 'i' }
-  }).exec()
+  })
+    .populate('user', 'name profileImage')
+    .exec()
 
   res.status(200).json(photos)
 }
