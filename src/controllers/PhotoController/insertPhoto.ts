@@ -13,12 +13,12 @@ export const insertPhoto = async (req: any, res: Response) => {
   const image = req.file.location
 
   const user = await UserModel.findById(req.user._id)
+
   // Create photo
   const newPhoto = await PhotoModel.create({
     image,
     title,
-    userId: user._id,
-    userName: user.name
+    user: user._id
   })
 
   // Check if user photo was uploaded sucessfully
