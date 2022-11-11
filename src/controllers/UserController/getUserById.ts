@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import mongoose from 'mongoose'
 
 import { UserModel } from '../../models/UserModel'
 
@@ -7,8 +6,8 @@ import { UserModel } from '../../models/UserModel'
 export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params
 
-  const user = await UserModel.findById(new mongoose.Types.ObjectId(id)).select(
-    '-password'
+  const user = await UserModel.findById(id).select(
+    '-password -__v -email -updatedAt'
   )
 
   // Check if user exists
