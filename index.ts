@@ -26,7 +26,7 @@ const configCorsOrigin = () => {
       process.env.ALLOWED_ORIGIN_3
     ]
   } else {
-    return [`http://localhost:${port}`]
+    return ['http://localhost:3000']
   }
 }
 
