@@ -1,7 +1,7 @@
 import mongoose, { Types, Schema } from 'mongoose'
 
 export interface IPhoto {
-  _id?: string
+  _id?: Types.ObjectId
   image?: string
   title?: string
   likes?: Array<Types.ObjectId>

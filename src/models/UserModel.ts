@@ -1,7 +1,7 @@
-import mongoose, { Schema } from 'mongoose'
+import mongoose, { Schema, Types } from 'mongoose'
 
 export interface IUser {
-  _id?: string
+  _id?: Types.ObjectId
   name: string
   email: string
   password: string
