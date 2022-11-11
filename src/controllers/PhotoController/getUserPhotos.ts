@@ -18,7 +18,7 @@ export const getUserPhotos = async (req: Request, res: Response) => {
     }
   ]
 
-  const photos = await PhotoModel.find({ userId: id })
+  const photos = await PhotoModel.find({ user: id })
     .populate(populateOptions)
     .sort({ createdAt: 'desc' })
     .exec()
