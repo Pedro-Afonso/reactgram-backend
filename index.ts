@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express'
-import cors, { CorsOptions } from 'cors'
+import cors from 'cors'
 import mongoose from 'mongoose'
 import 'dotenv/config'
 
@@ -18,23 +18,32 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 // Solve Cors
-const configCorsOrigin = () => {
+const corsOptions = () => {
   if (process.env.NODE_ENV === 'PRODUCTION') {
-    return [
+    const whitelist = [
       process.env.ALLOWED_ORIGIN_1,
       process.env.ALLOWED_ORIGIN_2,
       process.env.ALLOWED_ORIGIN_3
     ]
+
+    return {
+      origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+          callback(null, true)
+        } else {
+          callback(new Error('Not allowed by CORS'))
+        }
+      }
+    }
   } else {
-    return ['http://localhost:3000']
+    return {
+      origin: 'http://localhost:3000',
+      optionsSuccessStatus: 200
+    }
   }
 }
 
-const corsOptions: CorsOptions = {
-  credentials: true,
-  origin: configCorsOrigin()
-}
-app.use(cors(corsOptions))
+app.use(cors(corsOptions()))
 
 // Upload directory
 // app.use('/uploads', express.static(path.join(__dirname, '/src/uploads')))
