@@ -1,6 +1,9 @@
 import { Response } from 'express'
+
 import { PhotoModel } from '../../models/PhotoModel'
 import { UserModel } from '../../models/UserModel'
+import { AppError } from '../../config/AppError'
+import { tryCatch } from '../../utils'
 
 /* interface IInsertPhotoRequest extends Request {
   body: IPhoto
@@ -8,7 +11,7 @@ import { UserModel } from '../../models/UserModel'
 } */
 
 // Insert a photo, with an user related to it
-export const insertPhoto = async (req: any, res: Response) => {
+export const insertPhoto = tryCatch(async (req: any, res: Response) => {
   const { title } = req.body
   const image = req.file.location
 
@@ -23,12 +26,9 @@ export const insertPhoto = async (req: any, res: Response) => {
 
   // Check if user photo was uploaded sucessfully
   if (!newPhoto) {
-    res.status(422).json({
-      errors: ['Houve um erro, por favor tente novamente mais tarde.']
-    })
-    return
+    throw new AppError(422)
   }
 
   // Return data
   res.status(201).json(newPhoto)
-}
+})

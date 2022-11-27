@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
 
 import { UserModel } from '../../models/UserModel'
+import { AppError } from '../../config/AppError'
+import { tryCatch } from '../../utils'
 
 // Get user by id
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserById = tryCatch(async (req: Request, res: Response) => {
   const { id } = req.params
 
   const user = await UserModel.findById(id).select(
@@ -12,8 +14,8 @@ export const getUserById = async (req: Request, res: Response) => {
 
   // Check if user exists
   if (!user) {
-    res.status(404).json({ errors: ['Usuário não encontrado!'] })
+    throw new AppError(404, 'Usuário não encontrado!')
   }
 
   res.status(200).json(user)
-}
+})

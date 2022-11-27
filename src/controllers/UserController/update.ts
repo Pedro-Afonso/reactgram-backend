@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import 'dotenv/config'
 
-import { generatePasswordHash } from '../../utils'
+import { generatePasswordHash, tryCatch } from '../../utils'
 import { UserModel, IUser } from '../../models/UserModel'
 
 interface IUpdateForm {
@@ -20,7 +20,7 @@ interface IUpdateRequest extends Request {
   user: IUser
 }
 // Update user
-export const update = async (req: IUpdateRequest, res: Response) => {
+export const update = tryCatch(async (req: IUpdateRequest, res: Response) => {
   const { name, password, bio } = req.body
 
   const reqUser = req.user
@@ -48,4 +48,4 @@ export const update = async (req: IUpdateRequest, res: Response) => {
   }).select('-password')
 
   res.status(200).json(user)
-}
+})

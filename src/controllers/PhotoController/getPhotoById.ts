@@ -1,9 +1,11 @@
 import { Request, Response } from 'express'
 
 import { PhotoModel } from '../../models/PhotoModel'
+import { AppError } from '../../config/AppError'
+import { tryCatch } from '../../utils'
 
 // Get photo by id
-export const getPhotoById = async (req: Request, res: Response) => {
+export const getPhotoById = tryCatch(async (req: Request, res: Response) => {
   const { id } = req.params
 
   const photo = await PhotoModel.findById(id)
@@ -11,9 +13,8 @@ export const getPhotoById = async (req: Request, res: Response) => {
     .exec()
   // Check if photo exists
   if (!photo) {
-    res.status(404).json({ errors: ['Foto não encontrada!'] })
-    return
+    throw new AppError(404, 'Foto não encontrada!')
   }
 
   res.status(200).json(photo)
-}
+})

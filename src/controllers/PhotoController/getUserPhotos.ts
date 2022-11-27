@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
 
 import { PhotoModel } from '../../models/PhotoModel'
+import { tryCatch } from '../../utils'
 
 // Get user photos
-export const getUserPhotos = async (req: Request, res: Response) => {
+export const getUserPhotos = tryCatch(async (req: Request, res: Response) => {
   const { id } = req.params
 
   const populateOptions = [
@@ -24,4 +25,4 @@ export const getUserPhotos = async (req: Request, res: Response) => {
     .exec()
 
   return res.status(200).json(photos)
-}
+})
