@@ -10,14 +10,15 @@ import {
 } from '../controllers/UserController'
 
 // Middlewares
-import { validate } from '../middlewares/handleValidations'
 import {
   loginValidation,
   userCreateValidation,
   userUpdateValidation
 } from '../middlewares/userValidations'
-import { authGuard } from '../middlewares/authGuard'
+import { validate } from '../middlewares/handleValidations'
 import { imageUploadS3 } from '../middlewares/imageUpload'
+import { errorHandler } from '../middlewares/errorHandler'
+import { authGuard } from '../middlewares/authGuard'
 
 const router = express()
 
@@ -33,5 +34,7 @@ router.put(
   update
 )
 router.get('/:id', getUserById)
+
+router.use(errorHandler)
 
 export { router as UserRoutes }

@@ -15,12 +15,12 @@ import {
 
 // Middleware
 import {
-  /*   commmentValidation, */
   photoInsertValidation,
   photoUpdateValidation
 } from '../middlewares/photoValidation'
 import { validate } from '../middlewares/handleValidations'
 import { imageUploadS3 } from '../middlewares/imageUpload'
+import { errorHandler } from '../middlewares/errorHandler'
 import { authGuard } from '../middlewares/authGuard'
 
 const router = express.Router()
@@ -48,14 +48,7 @@ router.put(
   validate,
   updatePhoto
 )
-/*
- */
-/* router.put(
-  '/comment/:id',
-  authGuard,
-  commmentValidation(),
-  validate,
-  commentPhoto
-) */
+
+router.use(errorHandler)
 
 export { router as PhotoRoutes }
