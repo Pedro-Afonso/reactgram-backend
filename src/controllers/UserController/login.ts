@@ -33,9 +33,9 @@ export const login = tryCatch(
 
     // Return user with token
     res.status(200).json({
-      _id: user._id,
-      profileImage: user.profileImage,
-      token: generateToken(user._id)
+      authUser: user,
+      token: generateToken(user._id),
+      message: 'Usuário autenticado com sucesso!'
     })
   }
 )
