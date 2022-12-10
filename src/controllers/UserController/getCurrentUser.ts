@@ -12,6 +12,6 @@ export const getCurrentUser = tryCatch(
   async (req: IGetCurrentUserRequest, res: Response): Promise<void> => {
     const user = req.user
 
-    res.status(200).json(user)
+    res.status(200).json({ authUser: user })
   }
 )

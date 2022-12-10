@@ -47,5 +47,5 @@ export const update = tryCatch(async (req: IUpdateRequest, res: Response) => {
     new: true
   }).select('-password')
 
-  res.status(200).json(user)
+  res.status(200).json({ authUser: user })
 })
